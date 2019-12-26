@@ -34,8 +34,8 @@ class GetUsersTest extends TestCase
      */
     public function should_return_the_specified_number_of_items_per_page()
     {
-        $total = 100;
-        $perPage = 10;
+        $total = 5;
+        $perPage = 1;
         $currentPage = 2;
 
         $users = factory(User::class, $total)->create();
