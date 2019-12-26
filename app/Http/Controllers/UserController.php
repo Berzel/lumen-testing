@@ -8,6 +8,8 @@ use App\Utillities\HttpStatus;
 
 class UserController extends Controller
 {
+    private UserService $userService;
+
     /**
      * Create a new controller instance.
      *
@@ -49,10 +51,7 @@ class UserController extends Controller
     {
         try {
             $user = $this->userService->findById($id);
-        }
-
-        // 
-        catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             return response()->json([
                 'message' => $th->getMessage()
             ], HttpStatus::NOT_FOUND);
@@ -67,5 +66,18 @@ class UserController extends Controller
         $user = $this->userService->update($id, $input);
 
         return response()->json($user, HttpStatus::OK);
+    }
+
+    /**
+     * Delete a user
+     * 
+     * @param int $id The id of the user to be deleted
+     * @return Illuminate\Http\Response
+     */
+    public function delete(int $id)
+    {
+        $this->userService->delete($id);
+
+        return response()->json(null, HttpStatus::NO_CONTENT);
     }
 }

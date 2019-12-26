@@ -43,12 +43,26 @@ class UserService
      */
     public function findById(int $id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
 
         if (!$user) {
             throw new \Exception('User with id: ' . $id . ' not found', 1);
         }
 
         return $user;
+    }
+
+    /**
+     * Delete a user from storage
+     * 
+     * @return void
+     */
+    public function delete(int $id)
+    {
+        try {
+            $user = $this->findById($id);
+            $user->delete();
+        } catch (\Throwable $th) {
+        }
     }
 }

@@ -20,7 +20,9 @@ class UpdateUserTest extends TestCase
     public function should_return_not_found_if_user_not_found()
     {
         $response = $this->call('PUT', '/v1/users/1', [
-            'firstname' => 'Berzel'
+            'firstname' => 'Berzel',
+            'lastname' => 'Tumbude',
+            'email' => 'berzel@app.com'
         ]);
 
         $this->seeStatusCode(HttpStatus::NOT_FOUND);

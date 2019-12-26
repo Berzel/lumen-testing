@@ -14,6 +14,16 @@
 use Illuminate\Support\Facades\Route;
 
 $router->group(['prefix' => 'v1/users'], function () use ($router) {
+    $router->get('/', [
+        'as' => 'users.index',
+        'users' => 'UserController@index'
+    ]);
+
+    $router->delete('{id}', [
+        'as' => 'users.delete',
+        'uses' => 'UserController@delete'
+    ]);
+
     $router->put('{id}', [
         'as' => 'users.update',
         'uses' => 'UserController@update'
