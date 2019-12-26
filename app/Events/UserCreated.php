@@ -30,7 +30,7 @@ class UserCreated extends Event
      */
     public function getName()
     {
-        return env('APP_NAME') . '\\' . self::class;
+        return env('APP_NAME') . '.' . 'UserCreated';
     }
 
     /**
