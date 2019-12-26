@@ -11,8 +11,15 @@
 |
 */
 
-$router->group(['prefix' => 'v1'], function () use ($router) {
-    $router->post('users', [
+use Illuminate\Support\Facades\Route;
+
+$router->group(['prefix' => 'v1/users'], function () use ($router) {
+    $router->put('{id}', [
+        'as' => 'users.update',
+        'uses' => 'UserController@update'
+    ]);
+
+    $router->post('/', [
         'as' => 'users.create',
         'uses' => 'UserController@store'
     ]);

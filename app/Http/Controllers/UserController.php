@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\UserService;
 use Illuminate\Http\Request;
+use App\Services\UserService;
+use App\Utillities\HttpStatus;
 
 class UserController extends Controller
 {
@@ -18,22 +19,53 @@ class UserController extends Controller
     }
 
     /**
-     * Create a new user and save to the database
+     * Create a user
      * 
      * @param Illuminate\Http\Request
      * @return Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $validInput = $this->validate($request, [
+        $input = $this->validate($request, [
             'firstname' => 'required|max:255',
             'lastname' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|min:8|confirmed'
         ]);
 
-        $user = $this->userService->create($validInput);
+        $user = $this->userService->create($input);
 
-        return response()->json($user, 201);
+        return response()->json($user, HttpStatus::CREATED);
+    }
+
+    /**
+     * Update a user
+     * 
+     * @param Illuminate\Http\Request $request
+     * @param int $id The id of the user to be updated
+     * @return Illuminate\Http\Response
+     */
+    public function update(Request $request, int $id)
+    {
+        try {
+            $user = $this->userService->findById($id);
+        }
+
+        // 
+        catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage()
+            ], HttpStatus::NOT_FOUND);
+        }
+
+        $input = $this->validate($request, [
+            'firstname' => 'required|max:255',
+            'lastname' => 'required|max:255',
+            'email' => 'required|email|unique:users,email,' . $id . ',id'
+        ]);
+
+        $user = $this->userService->update($id, $input);
+
+        return response()->json($user, HttpStatus::OK);
     }
 }
