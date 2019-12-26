@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\UserService;
-use App\User;
 use App\Utillities\HttpStatus;
 
 class UserController extends Controller
@@ -50,7 +49,7 @@ class UserController extends Controller
         $input = $this->validate($request, [
             'firstname' => 'required|max:255',
             'lastname' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users,email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|confirmed'
         ]);
 
