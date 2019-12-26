@@ -4,6 +4,7 @@ namespace App\Tests\Feature;
 
 use App\Tests\TestCase;
 use App\User;
+use App\Utillities\HttpStatus;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 
@@ -27,7 +28,7 @@ class RegisterUserTest extends TestCase
             'password_confirmation' => 'secret123'
         ]);
 
-        $this->assertEquals(201, $response->status());
+        $this->assertEquals(HttpStatus::CREATED, $response->status());
     }
 
     /**
@@ -127,7 +128,7 @@ class RegisterUserTest extends TestCase
             'password_confirmation' => 'secret123'
         ]);
 
-        $this->assertEquals(422, $response->status());
+        $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
     }
 
     /**
@@ -147,7 +148,7 @@ class RegisterUserTest extends TestCase
             'password_confirmation' => 'secret123'
         ]);
 
-        $this->assertEquals(422, $response->status());
+        $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
     }
 
     /**
@@ -165,7 +166,7 @@ class RegisterUserTest extends TestCase
             'password_confirmation' => 'secret123'
         ]);
 
-        $this->assertEquals(422, $response->status());
+        $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
     }
 
     /**
@@ -211,7 +212,7 @@ class RegisterUserTest extends TestCase
             'password_confirmation' => 'secret123'
         ]);
 
-        $this->assertEquals(422, $response->status());
+        $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
     }
 
     /**
@@ -229,7 +230,7 @@ class RegisterUserTest extends TestCase
             'password_confirmation' => 'secret123'
         ]);
 
-        $this->assertEquals(422, $response->status());
+        $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
     }
 
     /**
@@ -248,7 +249,7 @@ class RegisterUserTest extends TestCase
             'password_confirmation' => 'secret123'
         ]);
 
-        $this->assertEquals(422, $response->status());
+        $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
     }
 
     /**
@@ -268,7 +269,7 @@ class RegisterUserTest extends TestCase
             'password_confirmation' => 'secret123'
         ]);
 
-        $this->assertEquals(422, $response->status());
+        $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
     }
 
     /**
@@ -294,7 +295,7 @@ class RegisterUserTest extends TestCase
             'password_confirmation' => 'secret123'
         ]);
 
-        $this->assertEquals(422, $response->status());
+        $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
     }
 
     /**
@@ -312,7 +313,7 @@ class RegisterUserTest extends TestCase
             'password_confirmation' => 'secret123'
         ]);
 
-        $this->assertEquals(422, $response->status());
+        $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
     }
 
     /**
@@ -331,7 +332,7 @@ class RegisterUserTest extends TestCase
             'password_confirmation' => 'secret'
         ]);
 
-        $this->assertEquals(422, $response->status());
+        $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
     }
 
     /**
@@ -349,6 +350,6 @@ class RegisterUserTest extends TestCase
             'password' => 'secret123',
         ]);
 
-        $this->assertEquals(422, $response->status());
+        $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
     }
 }
