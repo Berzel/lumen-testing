@@ -97,6 +97,13 @@ class UpdateUserTest extends TestCase
             'email' => 'sanchez@app.com'
         ]);
 
+        $this->seeInDatabase('users', [
+            'id' => 1,
+            'firstname' => 'Best',
+            'lastname' => 'Sanchez',
+            'email' => 'sanchez@app.com'
+        ]);
+
         $this->seeJsonContains([
             'firstname' => 'Best',
             'lastname' => 'Sanchez',
