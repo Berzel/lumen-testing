@@ -11,9 +11,13 @@
 |
 */
 
-use Illuminate\Support\Facades\Route;
-
 $router->group(['prefix' => 'v1/users'], function () use ($router) {
+
+    $router->get('{id}', [
+        'as' => 'users.show',
+        'uses' => 'UserController@get'
+    ]);
+
     $router->get('/', [
         'as' => 'users.index',
         'uses' => 'UserController@index'

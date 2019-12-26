@@ -54,4 +54,37 @@ class GetUsersTest extends TestCase
         // Last pages may give different lengths do be careful
         $this->assertEquals($perPage, count($responseData->data));
     }
+
+    /**
+     * Should return not found if try to get a user who doesn't exist
+     *
+     * @test
+     * @return void
+     */
+    public function should_return_not_found_if_get_non_existent_user()
+    {
+        $this->get('/v1/users/1');
+        $this->seeStatusCode(HttpStatus::NOT_FOUND);
+        $this->seeJsonContains(['message' => 'The user with id: 1, was not found']);
+    }
+
+    /**
+     * Should return specified user
+     *
+     * @test
+     * @return void
+     */
+    public function should_return_specified_user()
+    {
+        $user = factory(User::class)->create();
+
+        $this->get('/v1/users/1');
+        $this->seeStatusCode(HttpStatus::OK);
+        $this->seeJsonContains([
+            'id' => $user->id,
+            'firstname' => $user->firstname,
+            'lastname' => $user->lastname,
+            'email' => $user->email
+        ]);
+    }
 }

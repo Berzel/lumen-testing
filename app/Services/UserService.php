@@ -58,10 +58,10 @@ class UserService
      */
     public function findById(int $id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
 
         if (!$user) {
-            throw new UserNotFoundException('User with id: ' . $id . ' not found', 1);
+            throw new UserNotFoundException('The user with id: ' . $id . ', was not found', 1);
         }
 
         return $user;

@@ -27,6 +27,18 @@ class UserController extends Controller
     }
 
     /**
+     * Get a single use instance
+     * 
+     * @param int $id The id of the user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function get(int $id)
+    {
+        $user = $this->userService->findById($id);
+        return response()->json($user, HttpStatus::OK);
+    }
+
+    /**
      * Get a list of the users
      * 
      * @param \Illuminate\Http\Request
