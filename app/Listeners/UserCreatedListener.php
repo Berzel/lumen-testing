@@ -4,10 +4,8 @@ namespace App\Listeners;
 
 use App\Events\UserCreated;
 use App\Services\AMQPService;
-use PhpAmqpLib\Message\AMQPMessage;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 class UserCreatedListener
 {
@@ -20,6 +18,7 @@ class UserCreatedListener
     {
         $this->amqpService = $amqpService;
     }
+
     /**
      * Publish the event to RabbitMQ
      *

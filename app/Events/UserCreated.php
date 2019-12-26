@@ -23,11 +23,21 @@ class UserCreated extends Event
         $this->user = $user;
     }
 
+    /**
+     * Get the name of the event
+     *
+     * @return string
+     */
     public function getName()
     {
-        return 'userCreated';
+        return env('APP_NAME') . '\\' . self::class;
     }
 
+    /**
+     * Get the payload of the event
+     *
+     * @return $mixed
+     */
     public function getData()
     {
         return $this->user;
