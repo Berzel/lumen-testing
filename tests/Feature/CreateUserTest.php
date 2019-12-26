@@ -2,8 +2,8 @@
 
 namespace App\Tests\Feature;
 
-use App\Tests\TestCase;
 use App\User;
+use App\Tests\TestCase;
 use App\Utillities\HttpStatus;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
@@ -26,6 +26,12 @@ class RegisterUserTest extends TestCase
             'email' => 'berzel@app.com',
             'password' => 'secret123',
             'password_confirmation' => 'secret123'
+        ]);
+
+        $this->seeInDatabase('users', [
+            'firstname' => 'Berzel',
+            'lastname' => 'Tumbude',
+            'email' => 'berzel@app.com'
         ]);
 
         $this->assertEquals(HttpStatus::CREATED, $response->status());
@@ -110,7 +116,12 @@ class RegisterUserTest extends TestCase
             'password_confirmation' => 'secret123'
         ]);
 
-        $this->seeJsonContains(['id' => 1]);
+        $this->seeJsonContains([
+            'id' => 1,
+            'firstname' => 'Berzel',
+            'lastname' => 'Tumbude',
+            'email' => 'berzel@app.com'
+        ]);
     }
 
     /**
@@ -129,6 +140,9 @@ class RegisterUserTest extends TestCase
         ]);
 
         $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
+        $this->seeJsonContains([
+            'firstname' => ['The firstname field is required.']
+        ]);
     }
 
     /**
@@ -149,6 +163,9 @@ class RegisterUserTest extends TestCase
         ]);
 
         $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
+        $this->seeJsonContains([
+            'firstname' => ['The firstname may not be greater than 255 characters.']
+        ]);
     }
 
     /**
@@ -167,6 +184,9 @@ class RegisterUserTest extends TestCase
         ]);
 
         $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
+        $this->seeJsonContains([
+            'lastname' => ['The lastname field is required.']
+        ]);
     }
 
     /**
@@ -185,13 +205,18 @@ class RegisterUserTest extends TestCase
             'password_confirmation' => 'secret123'
         ]);
 
-        $user = User::find(1);
+        $this->seeStatusCode(HttpStatus::CREATED);
 
         $this->seeJsonContains([
             'id' => 1,
             'firstname' => 'Berzel',
             'lastname' => 'Tumbude',
             'email' => 'berzel@app.com'
+        ]);
+
+        $this->seeJsonDoesntContains([
+            'password' => 'secret123',
+            'password_confirmation' => 'secret123'
         ]);
     }
 
@@ -213,6 +238,9 @@ class RegisterUserTest extends TestCase
         ]);
 
         $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
+        $this->seeJsonContains([
+            'lastname' => ['The lastname may not be greater than 255 characters.']
+        ]);
     }
 
     /**
@@ -231,6 +259,9 @@ class RegisterUserTest extends TestCase
         ]);
 
         $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
+        $this->seeJsonContains([
+            'email' => ['The email field is required.']
+        ]);
     }
 
     /**
@@ -250,6 +281,9 @@ class RegisterUserTest extends TestCase
         ]);
 
         $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
+        $this->seeJsonContains([
+            'email' => ['The email must be a valid email address.']
+        ]);
     }
 
     /**
@@ -264,12 +298,15 @@ class RegisterUserTest extends TestCase
             'firstname' => 'Berzel',
             'lastname' => 'Tumbude',
             'email' => '
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. A consequatur cupiditate in consectetur harum sunt ipsum minus. Tempore nobis provident odio consequuntur quos at possimus assumenda voluptatem? Architecto possimus pariatur, voluptatibus animi aliquam provident nostrum et id numquam, eum quia sit quod nihil laboriosam libero suscipit excepturi velit voluptate molestias adipisci perspiciatis sunt esse sapiente cum. Quisquam, nihil vitae. Facere cumque quae reiciendis saepe amet corporis odit pariatur consequatur dolorem velit tempore deserunt voluptatem fugiat totam explicabo maiores dignissimos, eveniet qui illo repellendus? Iure ex harum veritatis ea voluptatum. Vel provident eos eum mollitia accusantium! Amet dolorum quae iusto natus@app.com',
+                asalfjasdfjalskdjflakjsdlkfajsdlkfjaklsdjflkajsdlkfajusdofuasera8esruadsljfasdoifujasldkfnlksdjfhuidandsfauosdfaskdljfhasd8fasdfiuasdf89asdfasdnfkasjdfh98asdf7asdnfa8sdf7asd987sdf79sdfj98q2379837423f98sdaf79as8d7fasdjfas9d8f7asdf897asdfjasd98f7asd89f7sadfj9as8d7fasd@app.com',
             'password' => 'secret123',
             'password_confirmation' => 'secret123'
         ]);
 
         $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
+        $this->seeJsonContains([
+            'email' => ['The email must be a valid email address.']
+        ]);
     }
 
     /**
@@ -296,6 +333,9 @@ class RegisterUserTest extends TestCase
         ]);
 
         $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
+        $this->seeJsonContains([
+            'email' => ['The email has already been taken.']
+        ]);
     }
 
     /**
@@ -314,6 +354,9 @@ class RegisterUserTest extends TestCase
         ]);
 
         $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
+        $this->seeJsonContains([
+            'password' => ['The password field is required.']
+        ]);
     }
 
     /**
@@ -333,6 +376,9 @@ class RegisterUserTest extends TestCase
         ]);
 
         $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
+        $this->seeJsonContains([
+            'password' => ['The password must be at least 8 characters.']
+        ]);
     }
 
     /**
@@ -351,5 +397,8 @@ class RegisterUserTest extends TestCase
         ]);
 
         $this->assertEquals(HttpStatus::UNPROCESSABLE_ENTITY, $response->status());
+        $this->seeJsonContains([
+            'password' => ['The password confirmation does not match.']
+        ]);
     }
 }
