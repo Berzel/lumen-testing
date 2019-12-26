@@ -2,8 +2,8 @@
 
 namespace App\Tests\Feature;
 
-use App\Tests\TestCase;
 use App\User;
+use App\Tests\TestCase;
 use App\Utillities\HttpStatus;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
@@ -51,6 +51,7 @@ class GetUsersTest extends TestCase
         $this->seeJsonContains(['per_page' => $perPage]);
         $this->seeJsonContains(['current_page' => $currentPage]);
 
+        // Last pages may give different lengths do be careful
         $this->assertEquals($perPage, count($responseData->data));
     }
 }

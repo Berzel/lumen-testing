@@ -12,7 +12,7 @@ class UpdateUserTest extends TestCase
     use DatabaseMigrations, DatabaseTransactions;
 
     /**
-     * Shoudl return not found response when specified user not in database
+     * Should return not found response when specified user not in database
      *
      * @test
      * @return void
@@ -26,10 +26,13 @@ class UpdateUserTest extends TestCase
         ]);
 
         $this->seeStatusCode(HttpStatus::NOT_FOUND);
+        $this->notSeeInDatabase('users', [
+            'id' => 1
+        ]);
     }
 
     /**
-     * Shoudl return unprocessable entity if firstname is not provided
+     * Should return unprocessable entity if firstname is not provided
      *
      * @test
      * @return void
@@ -50,10 +53,13 @@ class UpdateUserTest extends TestCase
         ]);
 
         $this->seeStatusCode(HttpStatus::UNPROCESSABLE_ENTITY);
+        $this->seeJsonContains([
+            'firstname' => ['The firstname field is required.']
+        ]);
     }
 
     /**
-     * Shoudl not change the id of the user during update
+     * Should not change the id of the user during update
      *
      * @test
      * @return void
@@ -78,7 +84,7 @@ class UpdateUserTest extends TestCase
     }
 
     /**
-     * Shoudl update the user with the new details
+     * Should update the user with the new details
      *
      * @test
      * @return void
@@ -114,7 +120,7 @@ class UpdateUserTest extends TestCase
     }
 
     /**
-     * Shoudl return unprocessable entity if firstname is longer than 255
+     * Should return unprocessable entity if firstname is longer than 255
      *
      * @test
      * @return void
@@ -137,10 +143,13 @@ class UpdateUserTest extends TestCase
         ]);
 
         $this->seeStatusCode(HttpStatus::UNPROCESSABLE_ENTITY);
+        $this->seeJsonContains([
+            'firstname' => ['The firstname may not be greater than 255 characters.']
+        ]);
     }
 
     /**
-     * Shoudl return unprocessable entity if lastname is not provided
+     * Should return unprocessable entity if lastname is not provided
      *
      * @test
      * @return void
@@ -161,10 +170,13 @@ class UpdateUserTest extends TestCase
         ]);
 
         $this->seeStatusCode(HttpStatus::UNPROCESSABLE_ENTITY);
+        $this->seeJsonContains([
+            'lastname' => ['The lastname field is required.']
+        ]);
     }
 
     /**
-     * Shoudl return unprocessable entity if lastname is longer than 255
+     * Should return unprocessable entity if lastname is longer than 255
      *
      * @test
      * @return void
@@ -187,10 +199,13 @@ class UpdateUserTest extends TestCase
         ]);
 
         $this->seeStatusCode(HttpStatus::UNPROCESSABLE_ENTITY);
+        $this->seeJsonContains([
+            'lastname' => ['The lastname may not be greater than 255 characters.']
+        ]);
     }
 
     /**
-     * Shoudl return unprocessable entity if email is not provided
+     * Should return unprocessable entity if email is not provided
      *
      * @test
      * @return void
@@ -211,10 +226,13 @@ class UpdateUserTest extends TestCase
         ]);
 
         $this->seeStatusCode(HttpStatus::UNPROCESSABLE_ENTITY);
+        $this->seeJsonContains([
+            'email' => ['The email field is required.']
+        ]);
     }
 
     /**
-     * Shoudl return unprocessable entity if email is not valid
+     * Should return unprocessable entity if email is not valid
      *
      * @test
      * @return void
@@ -236,10 +254,13 @@ class UpdateUserTest extends TestCase
         ]);
 
         $this->seeStatusCode(HttpStatus::UNPROCESSABLE_ENTITY);
+        $this->seeJsonContains([
+            'email' => ['The email must be a valid email address.']
+        ]);
     }
 
     /**
-     * Shoudl return unprocessable entity if email belongs to another user
+     * Should return unprocessable entity if email belongs to another user
      *
      * @test
      * @return void
@@ -269,5 +290,8 @@ class UpdateUserTest extends TestCase
         ]);
 
         $this->seeStatusCode(HttpStatus::UNPROCESSABLE_ENTITY);
+        $this->seeJsonContains([
+            'email' => ['The email has already been taken.']
+        ]);
     }
 }
