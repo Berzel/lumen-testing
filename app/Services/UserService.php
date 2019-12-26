@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Events\UserCreated;
 use App\User;
-use Exception;
+use App\Events\UserCreated;
+use App\Events\UserUpdated;
 
 class UserService
 {
@@ -12,7 +12,7 @@ class UserService
      * Save the user to the database
      * 
      * @param array $fields
-     * @return App\User $user
+     * @return \App\User $user
      */
     public function create(array $fields)
     {
@@ -25,14 +25,13 @@ class UserService
      * Update the user in database
      * 
      * @param array $fields
-     * @return App\User $user
+     * @return \App\User $user
      */
     public function update(int $id, array $fields)
     {
         $user = $this->findById($id);
-
         $user->update($fields);
-        // event(new UserCreated($user));
+        event(new UserUpdated($user));
         return $user;
     }
 
@@ -40,14 +39,14 @@ class UserService
      * Find the user in the database by id
      * 
      * @param int $id
-     * @return App\User $user
+     * @return \App\User $user
      */
     public function findById(int $id)
     {
         $user = User::find($id);
 
         if (!$user) {
-            throw new Exception('User with id: ' . $id . ' not found', 1);
+            throw new \Exception('User with id: ' . $id . ' not found', 1);
         }
 
         return $user;

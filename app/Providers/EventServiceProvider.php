@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\UserCreated;
+use App\Events\UserUpdated;
 use App\Listeners\UserCreatedListener;
+use App\Listeners\UserUpdatedListener;
 use Laravel\Lumen\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -16,6 +18,10 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         UserCreated::class => [
             UserCreatedListener::class
+        ],
+
+        UserUpdated::class => [
+            UserUpdatedListener::class
         ]
     ];
 }
