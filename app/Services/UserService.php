@@ -9,6 +9,11 @@ use App\Events\UserUpdated;
 
 class UserService
 {
+    public function getAll($perPage = 10)
+    {
+        return User::paginate($perPage);
+    }
+
     /**
      * Save the user to the database
      * 

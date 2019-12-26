@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\UserService;
+use App\User;
 use App\Utillities\HttpStatus;
 
 class UserController extends Controller
@@ -23,6 +24,19 @@ class UserController extends Controller
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
+    }
+
+    /**
+     * Get a list of the users
+     * 
+     * @param Illuminate\Http\Request
+     * @return Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $perPage = $request->input('_size');
+        $users = $this->userService->getAll($perPage);
+        return response()->json($users, HttpStatus::OK);
     }
 
     /**
