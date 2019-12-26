@@ -18,6 +18,7 @@ class UserController extends Controller
     /**
      * Create a new controller instance.
      *
+     * @param \App\Services\UserService
      * @return void
      */
     public function __construct(UserService $userService)
@@ -28,8 +29,8 @@ class UserController extends Controller
     /**
      * Get a list of the users
      * 
-     * @param Illuminate\Http\Request
-     * @return Illuminate\Http\Response
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
     {
@@ -41,8 +42,8 @@ class UserController extends Controller
     /**
      * Create a user
      * 
-     * @param Illuminate\Http\Request
-     * @return Illuminate\Http\Response
+     * @param \Illuminate\Http\Request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -61,19 +62,13 @@ class UserController extends Controller
     /**
      * Update a user
      * 
-     * @param Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request
      * @param int $id The id of the user to be updated
-     * @return Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, int $id)
     {
-        try {
-            $user = $this->userService->findById($id);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'message' => $th->getMessage()
-            ], HttpStatus::NOT_FOUND);
-        }
+        $user = $this->userService->findById($id);
 
         $input = $this->validate($request, [
             'firstname' => 'required|max:255',

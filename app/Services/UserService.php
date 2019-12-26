@@ -6,10 +6,17 @@ use App\User;
 use App\Events\UserCreated;
 use App\Events\UserDeleted;
 use App\Events\UserUpdated;
+use App\Exceptions\UserNotFoundException;
 
 class UserService
 {
-    public function getAll($perPage = 10)
+    /**
+     * Get all users from the database. By default users are paginated 15 per page
+     * 
+     * @param int $perPage The number of users to show per page
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function getAll($perPage = 15)
     {
         return User::paginate($perPage);
     }
@@ -30,6 +37,7 @@ class UserService
     /**
      * Update the user in database
      * 
+     * @param int $id The id of the user to update
      * @param array $fields
      * @return \App\User $user
      */
@@ -44,23 +52,26 @@ class UserService
     /**
      * Find the user in the database by id
      * 
-     * @param int $id
-     * @return \App\User $user
+     * @param int $id The id of the user to fetch
+     * @return \App\User The user instance
+     * @throws \App\Exceptions\UserNotFoundException
      */
     public function findById(int $id)
     {
         $user = User::findOrFail($id);
 
         if (!$user) {
-            throw new \Exception('User with id: ' . $id . ' not found', 1);
+            throw new UserNotFoundException('User with id: ' . $id . ' not found', 1);
         }
 
         return $user;
     }
 
     /**
-     * Delete a user from storage
+     * Delete a user from storage. The method does not throw an error if user
+     * is not found, it simply ignores the exception
      * 
+     * @param int $id The id of the user to delete from storage
      * @return void
      */
     public function delete(int $id)
