@@ -3,11 +3,22 @@
 namespace App\Services;
 
 use App\Events\Event;
-use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Message\AMQPMessage;
+use PhpAmqpLib\Exchange\AMQPExchangeType;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 class AMQPService
 {
+    private AMQPChannel $channel;
+
+    private AMQPStreamConnection $connection;
+
+    /**
+     * Create a new AMQP Service instance
+     * 
+     * @return void
+     */
     public function __construct()
     {
         $host = env('AMQP_HOST');
@@ -19,13 +30,19 @@ class AMQPService
         $this->channel = $this->connection->channel();
     }
 
+    /**
+     * Publish an event to it's exchange
+     * 
+     * @param App\Events\Event
+     * @return void
+     */
     public function publish(Event $event)
     {
-        $this->channel->exchange_declare($event->getName(), 'fanout', false, true, false);
+        $this->channel->exchange_declare($event->getName(), AMQPExchangeType::FANOUT, false, true, false);
 
         $message = new AMQPMessage(json_encode($event->getData()), [
-            'Content Type' => 'application/json',
-            'delivery mode' => 2
+            'content_type' => 'application/json',
+            'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT
         ]);
 
         $this->channel->basic_publish($message, $event->getName());
