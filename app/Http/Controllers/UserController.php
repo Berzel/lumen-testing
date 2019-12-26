@@ -8,6 +8,11 @@ use App\Utillities\HttpStatus;
 
 class UserController extends Controller
 {
+    /**
+     * The UserService implementation
+     * 
+     * @var \App\Services\UserService
+     */
     private UserService $userService;
 
     /**
@@ -77,7 +82,6 @@ class UserController extends Controller
     public function delete(int $id)
     {
         $this->userService->delete($id);
-
         return response()->json(null, HttpStatus::NO_CONTENT);
     }
 }

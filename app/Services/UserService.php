@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\User;
 use App\Events\UserCreated;
+use App\Events\UserDeleted;
 use App\Events\UserUpdated;
 
 class UserService
@@ -62,7 +63,12 @@ class UserService
         try {
             $user = $this->findById($id);
             $user->delete();
-        } catch (\Throwable $th) {
+            event(new UserDeleted($user));
+        }
+
+        // 
+        catch (\Throwable $th) {
+            # Code...
         }
     }
 }
