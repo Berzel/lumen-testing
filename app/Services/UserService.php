@@ -87,4 +87,18 @@ class UserService
             # Code...
         }
     }
+
+    /**
+     * Change a user's password in storage
+     * 
+     * @param int $id The id of the user
+     * @param string $newPassword The new password to be assigned
+     * @return void
+     */
+    public function changePassword(int $id, string $newPassword)
+    {
+        $user = $this->findById($id);
+        $user->password = $newPassword;
+        $user->save();
+    }
 }

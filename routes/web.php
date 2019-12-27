@@ -33,6 +33,11 @@ $router->group(['prefix' => 'v1/users'], function () use ($router) {
         'uses' => 'UserController@update'
     ]);
 
+    $router->put('{id}/password', [
+        'as' => 'users.change-password',
+        'uses' => 'UserController@changePassword'
+    ]);
+
     $router->post('/', [
         'as' => 'users.create',
         'uses' => 'UserController@store'
