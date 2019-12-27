@@ -7,8 +7,10 @@ use App\Services\AMQPService;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class UserDeletedListener
+class UserDeletedListener implements ShouldQueue
 {
+    use InteractsWithQueue;
+
     /**
      * Listens for the UserDeleted event
      *

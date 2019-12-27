@@ -7,8 +7,10 @@ use App\Services\AMQPService;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class UserCreatedListener
+class UserCreatedListener implements ShouldQueue
 {
+    use InteractsWithQueue;
+
     /**
      * Listens for the UserCreated event
      *

@@ -7,8 +7,10 @@ use App\Events\PasswordChanged;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class PasswordChangedListener
+class PasswordChangedListener implements ShouldQueue
 {
+    use InteractsWithQueue;
+
     /**
      * Listens for the PasswordChanged event
      *
