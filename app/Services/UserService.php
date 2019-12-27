@@ -6,6 +6,7 @@ use App\User;
 use App\Events\UserCreated;
 use App\Events\UserDeleted;
 use App\Events\UserUpdated;
+use App\Events\PasswordChanged;
 use App\Exceptions\UserNotFoundException;
 
 class UserService
@@ -100,5 +101,6 @@ class UserService
         $user = $this->findById($id);
         $user->password = $newPassword;
         $user->save();
+        event(new PasswordChanged($user));
     }
 }

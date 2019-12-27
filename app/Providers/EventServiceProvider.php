@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\PasswordChanged;
 use App\Events\UserCreated;
 use App\Events\UserDeleted;
 use App\Events\UserUpdated;
+use App\Listeners\PasswordChangedListener;
 use App\Listeners\UserCreatedListener;
 use App\Listeners\UserDeletedListener;
 use App\Listeners\UserUpdatedListener;
@@ -28,6 +30,10 @@ class EventServiceProvider extends ServiceProvider
 
         UserDeleted::class => [
             UserDeletedListener::class
+        ],
+
+        PasswordChanged::class => [
+            PasswordChangedListener::class
         ]
     ];
 }
