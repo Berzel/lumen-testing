@@ -8,6 +8,7 @@ use App\Events\UserDeleted;
 use App\Events\UserUpdated;
 use App\Events\PasswordChanged;
 use App\Exceptions\UserNotFoundException;
+use Illuminate\Support\Facades\DB;
 
 class UserService
 {
@@ -30,8 +31,10 @@ class UserService
      */
     public function create(array $fields)
     {
+        DB::beginTransaction();
         $user = User::create($fields);
         event(new UserCreated($user));
+        DB::commit();
         return $user;
     }
 
@@ -44,9 +47,11 @@ class UserService
      */
     public function update(int $id, array $fields)
     {
+        DB::beginTransaction();
         $user = $this->findById($id);
         $user->update($fields);
         event(new UserUpdated($user));
+        DB::commit();
         return $user;
     }
 
@@ -77,6 +82,7 @@ class UserService
      */
     public function delete(int $id)
     {
+        DB::beginTransaction();
         try {
             $user = $this->findById($id);
             $user->delete();
@@ -87,6 +93,7 @@ class UserService
         catch (\Throwable $th) {
             # Code...
         }
+        DB::commit();
     }
 
     /**
@@ -98,9 +105,11 @@ class UserService
      */
     public function changePassword(int $id, string $newPassword)
     {
+        DB::beginTransaction();
         $user = $this->findById($id);
         $user->password = $newPassword;
         $user->save();
         event(new PasswordChanged($user));
+        DB::commit();
     }
 }
