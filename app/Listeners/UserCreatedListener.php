@@ -10,8 +10,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class UserCreatedListener
 {
     /**
-     * Create the event listener.
+     * Listens for the UserCreated event
      *
+     * @param \App\Services\AMQPService $amqpService
      * @return void
      */
     public function __construct(AMQPService $amqpService)
@@ -22,7 +23,7 @@ class UserCreatedListener
     /**
      * Publish the event to RabbitMQ
      *
-     * @param  \App\Events\ExampleEvent  $event
+     * @param  \App\Events\UserCreated  $event
      * @return void
      */
     public function handle(UserCreated $event)

@@ -2,14 +2,14 @@
 
 namespace App\Providers;
 
-use App\Events\PasswordChanged;
 use App\Events\UserCreated;
 use App\Events\UserDeleted;
 use App\Events\UserUpdated;
-use App\Listeners\PasswordChangedListener;
+use App\Events\PasswordChanged;
 use App\Listeners\UserCreatedListener;
 use App\Listeners\UserDeletedListener;
 use App\Listeners\UserUpdatedListener;
+use App\Listeners\PasswordChangedListener;
 use Laravel\Lumen\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider

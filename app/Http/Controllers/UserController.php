@@ -19,7 +19,7 @@ class UserController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param \App\Services\UserService
+     * @param \App\Services\UserService  $userService
      * @return void
      */
     public function __construct(UserService $userService)
@@ -28,7 +28,7 @@ class UserController extends Controller
     }
 
     /**
-     * Get a single use instance
+     * Get a single user instance
      * 
      * @param int $id The id of the user
      * @return \Illuminate\Http\JsonResponse
@@ -42,7 +42,7 @@ class UserController extends Controller
     /**
      * Get a list of the users
      * 
-     * @param \Illuminate\Http\Request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(Request $request)
@@ -55,7 +55,7 @@ class UserController extends Controller
     /**
      * Create a user
      * 
-     * @param \Illuminate\Http\Request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
@@ -73,9 +73,9 @@ class UserController extends Controller
     }
 
     /**
-     * Update a user
+     * Update a user's details
      * 
-     * @param \Illuminate\Http\Request
+     * @param \Illuminate\Http\Request $request
      * @param int $id The id of the user to be updated
      * @return \Illuminate\Http\JsonResponse
      */
@@ -97,7 +97,7 @@ class UserController extends Controller
     /**
      * Update a user's password
      * 
-     * @param \Illuminate\Http\Request
+     * @param \Illuminate\Http\Request $request
      * @param int $id The id of the user
      * @return \Illuminate\Http\JsonResponse
      */
@@ -125,7 +125,7 @@ class UserController extends Controller
         if ($similar) {
             return response()->json([
                 'new_password' => [
-                    'The new password should be different from the old password.'
+                    'The new password must be different from the old password.'
                 ]
             ], HttpStatus::UNPROCESSABLE_ENTITY);
         }
@@ -133,7 +133,7 @@ class UserController extends Controller
         $this->userService->changePassword($id, $input['new_password']);
 
         return response()->json([
-            'message' => 'The password has been changed successfully'
+            'message' => 'The password has been changed successfully.'
         ], HttpStatus::OK);
     }
 

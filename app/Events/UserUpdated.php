@@ -9,13 +9,14 @@ class UserUpdated extends Event
     /**
      * The user that has been updated
      * 
-     * @var App\User
+     * @var \App\User
      */
     public User $user;
 
     /**
-     * Create a new event instance.
+     * This event is fired when a user has been updated.
      *
+     * @param \App\User $user
      * @return void
      */
     public function __construct(User $user)
@@ -34,7 +35,7 @@ class UserUpdated extends Event
     }
 
     /**
-     * Get the payload of the event
+     * Get the event payload
      *
      * @return $mixed
      */

@@ -62,7 +62,7 @@ class UserService
         $user = User::find($id);
 
         if (!$user) {
-            throw new UserNotFoundException('The user with id: ' . $id . ', was not found', 1);
+            throw new UserNotFoundException('The user with id: ' . $id . ', was not found');
         }
 
         return $user;

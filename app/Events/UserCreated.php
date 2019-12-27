@@ -7,15 +7,16 @@ use App\User;
 class UserCreated extends Event
 {
     /**
-     * The data that is to be passed with the event
+     * The user who has been created
      * 
-     * @var App\User
+     * @var \App\User
      */
     public User $user;
 
     /**
-     * Create a new event instance.
+     * This event is fired when a new user has been created.
      *
+     * @param \App\User $user
      * @return void
      */
     public function __construct(User $user)
@@ -34,7 +35,7 @@ class UserCreated extends Event
     }
 
     /**
-     * Get the payload of the event
+     * Get the event payload
      *
      * @return $mixed
      */

@@ -2,17 +2,17 @@
 
 namespace App\Listeners;
 
-use App\Events\PasswordChanged;
-use App\Events\UserCreated;
 use App\Services\AMQPService;
+use App\Events\PasswordChanged;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class PasswordChangedListener
 {
     /**
-     * Create the event listener.
+     * Listens for the PasswordChanged event
      *
+     * @param \App\Services\AMQPService $amqpService
      * @return void
      */
     public function __construct(AMQPService $amqpService)

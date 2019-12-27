@@ -48,7 +48,7 @@ class ChangePasswordTest extends TestCase
         ]);
 
         $this->seeStatusCode(HttpStatus::OK);
-        $this->seeJsonContains(['message' => 'The password has been changed successfully']);
+        $this->seeJsonContains(['message' => 'The password has been changed successfully.']);
 
         // Just verifying if old password has been invalidated
         $user = User::find(1);
@@ -203,7 +203,7 @@ class ChangePasswordTest extends TestCase
 
         $this->seeStatusCode(HttpStatus::UNPROCESSABLE_ENTITY);
         $this->seeJsonContains([
-            'new_password' => ['The new password should be different from the old password.']
+            'new_password' => ['The new password must be different from the old password.']
         ]);
     }
 }

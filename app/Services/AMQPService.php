@@ -10,8 +10,18 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 class AMQPService
 {
+    /**
+     * The default channel this application will use to publish messages
+     * 
+     * @var \PhpAmqpLib\Channel\AMQPChannel
+     */
     private AMQPChannel $channel;
 
+    /**
+     * The AMQP connection
+     * 
+     * @var \PhpAmqpLib\Connection\AMQPStreamConnection
+     */
     private AMQPStreamConnection $connection;
 
     /**
@@ -26,6 +36,7 @@ class AMQPService
         $user = env('AMQP_USER');
         $password = env('AMQP_PASSWORD');
         $vhost = env('AMQP_VHOST');
+
         $this->connection = new AMQPStreamConnection($host, $port, $user, $password, $vhost);
         $this->channel = $this->connection->channel();
     }
@@ -33,7 +44,7 @@ class AMQPService
     /**
      * Publish an event to it's exchange
      * 
-     * @param App\Events\Event
+     * @param App\Events\Event $event
      * @return void
      */
     public function publish(Event $event)

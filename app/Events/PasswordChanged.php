@@ -7,15 +7,16 @@ use App\User;
 class PasswordChanged extends Event
 {
     /**
-     * The data that is to be passed with the event
+     * The user whose's password just changed
      * 
      * @var App\User
      */
     public User $user;
 
     /**
-     * Create a new event instance.
+     * This event is fired when a users password has been changed.
      *
+     * @param \App\User $user The user whose password changed
      * @return void
      */
     public function __construct(User $user)
@@ -34,7 +35,7 @@ class PasswordChanged extends Event
     }
 
     /**
-     * Get the payload of the event
+     * Get the event payload
      *
      * @return $mixed
      */

@@ -2,24 +2,23 @@
 
 namespace App\Providers;
 
+use App\Services\AMQPService;
 use Illuminate\Support\ServiceProvider;
-use PhpAmqpLib\Connection\AMQPConnection;
-use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 class AMQPServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * Register amqp application services.
      *
      * @return void
      */
     public function register()
     {
-        # Code...
+        $this->app->singleton(AMQPService::class, AMQPService::class);
     }
 
     /**
-     * Boot the authentication services for the application.
+     * Boot the amqp services for the application.
      *
      * @return void
      */

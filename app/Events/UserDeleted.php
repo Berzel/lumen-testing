@@ -7,15 +7,16 @@ use App\User;
 class UserDeleted extends Event
 {
     /**
-     * The user that has been updated
+     * The user that has been deleted
      * 
-     * @var App\User
+     * @var \App\User
      */
     public User $user;
 
     /**
-     * Create a new event instance.
+     * This event is fired when a user account has been deleted.
      *
+     * @param \App\User $user
      * @return void
      */
     public function __construct(User $user)
@@ -34,7 +35,7 @@ class UserDeleted extends Event
     }
 
     /**
-     * Get the payload of the event
+     * Get the event payload
      *
      * @return $mixed
      */
