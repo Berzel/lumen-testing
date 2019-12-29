@@ -56,6 +56,22 @@ class AMQPService
             'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT
         ]);
 
+        // The nack_handler
+        $nackHandler = function (AMQPMessage $message) {
+            echo 'Handling not ack message: Republishing message' . PHP_EOL;
+        };
+
+        // Ack handler
+        $ackHandler = function (AMQPMessage $message) {
+            echo 'Message acknowledged' . PHP_EOL;
+        };
+
+        $this->channel->set_nack_handler($nackHandler);
+        $this->channel->set_ack_handler($ackHandler);
+
+
+        $this->channel->confirm_select();
+
         $this->channel->basic_publish($message, $event->getName());
     }
 }

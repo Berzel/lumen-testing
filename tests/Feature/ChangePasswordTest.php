@@ -2,6 +2,7 @@
 
 namespace App\Tests\Feature;
 
+use App\Events\PasswordChanged;
 use App\User;
 use App\Tests\TestCase;
 use App\Utillities\HttpStatus;
@@ -40,6 +41,7 @@ class ChangePasswordTest extends TestCase
     public function should_return_ok_after_user_changed_password()
     {
         factory(User::class)->create();
+        $this->expectsEvents(PasswordChanged::class);
 
         $this->put('/v1/users/1/password', [
             'old_password' => 'secrete123',

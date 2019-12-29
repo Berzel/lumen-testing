@@ -2,6 +2,7 @@
 
 namespace App\Tests\Feature;
 
+use App\Events\UserCreated;
 use App\User;
 use App\Tests\TestCase;
 use App\Utillities\HttpStatus;
@@ -20,6 +21,7 @@ class RegisterUserTest extends TestCase
      */
     public function should_return_201_response_code_on_success()
     {
+        $this->expectsEvents(UserCreated::class);
         $response = $this->call('POST', '/v1/users', [
             'firstname' => 'Berzel',
             'lastname' => 'Tumbude',
@@ -45,6 +47,8 @@ class RegisterUserTest extends TestCase
      */
     public function should_save_the_user_to_db()
     {
+        $this->expectsEvents(UserCreated::class);
+
         $response = $this->call('POST', '/v1/users', [
             'firstname' => 'Berzel',
             'lastname' => 'Tumbude',
@@ -68,6 +72,8 @@ class RegisterUserTest extends TestCase
      */
     public function should_encrypt_password_in_db()
     {
+        $this->expectsEvents(UserCreated::class);
+
         $response = $this->call('POST', '/v1/users', [
             'firstname' => 'Berzel',
             'lastname' => 'Tumbude',
@@ -89,6 +95,8 @@ class RegisterUserTest extends TestCase
      */
     public function should_not_return_password_field_in_json_response()
     {
+        $this->expectsEvents(UserCreated::class);
+
         $response = $this->call('POST', '/v1/users', [
             'firstname' => 'Berzel',
             'lastname' => 'Tumbude',
@@ -108,6 +116,8 @@ class RegisterUserTest extends TestCase
      */
     public function should_assign_an_id_to_the_created_user()
     {
+        $this->expectsEvents(UserCreated::class);
+
         $response = $this->call('POST', '/v1/users', [
             'firstname' => 'Berzel',
             'lastname' => 'Tumbude',
@@ -197,6 +207,8 @@ class RegisterUserTest extends TestCase
      */
     public function should_return_valid_json_with_all_fields()
     {
+        $this->expectsEvents(UserCreated::class);
+
         $response = $this->call('POST', '/v1/users', [
             'firstname' => 'Berzel',
             'lastname' => 'Tumbude',

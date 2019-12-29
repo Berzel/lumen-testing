@@ -2,6 +2,7 @@
 
 namespace App\Tests\Feature;
 
+use App\Events\UserUpdated;
 use App\Tests\TestCase;
 use App\Utillities\HttpStatus;
 use Laravel\Lumen\Testing\DatabaseMigrations;
@@ -66,6 +67,8 @@ class UpdateUserTest extends TestCase
      */
     public function should_not_change_the_id_of_the_user_on_update()
     {
+        $this->expectsEvents(UserUpdated::class);
+
         $this->post('/v1/users', [
             'firstname' => 'Berzel',
             'lastname' => 'Tumbude',
@@ -91,6 +94,8 @@ class UpdateUserTest extends TestCase
      */
     public function should_update_the_user_with_the_new_details()
     {
+        $this->expectsEvents(UserUpdated::class);
+
         $this->post('/v1/users', [
             'firstname' => 'Berzel',
             'lastname' => 'Tumbude',

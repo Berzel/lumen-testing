@@ -2,6 +2,7 @@
 
 namespace App\Tests\Feature;
 
+use App\Events\UserDeleted;
 use App\User;
 use App\Tests\TestCase;
 use App\Utillities\HttpStatus;
@@ -33,6 +34,8 @@ class DeleteUserTest extends TestCase
      */
     public function should_soft_delete_a_user()
     {
+        $this->expectsEvents(UserDeleted::class);
+
         $response = $this->call('POST', '/v1/users', [
             'firstname' => 'Berzel',
             'lastname' => 'Tumbude',
