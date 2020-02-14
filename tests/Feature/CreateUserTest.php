@@ -2,9 +2,9 @@
 
 namespace App\Tests\Feature;
 
-use App\Events\UserCreated;
 use App\User;
 use App\Tests\TestCase;
+use App\Events\UserCreated;
 use App\Utillities\HttpStatus;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
